@@ -69,9 +69,9 @@ class EventBridgePlugin(Star):
         try:
             from astrbot.core.utils.astrbot_path import get_astrbot_data_path
 
-            return Path(get_astrbot_data_path()) / "task"
+            return Path(get_astrbot_data_path()) / "plugin_data" / "astrbot_plugin_screen_watch"
         except Exception:
-            return Path(r"D:\AstrBot\data\task")
+            return Path(__file__).resolve().parent / "data"
 
     @property
     def wait_dir(self) -> Path:

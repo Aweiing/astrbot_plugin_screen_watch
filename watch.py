@@ -26,19 +26,16 @@ TASK_DIR = Path(os.environ.get("ASTRBOT_TASK_DIR", "")) if os.environ.get("ASTRB
 
 
 def resolve_task_dir(explicit: str | None = None) -> Path:
-    """确定任务目录：命令行 > 环境变量 > AstrBot 数据目录 > 当前目录下的 task。"""
+    """确定任务目录：命令行 > 环境变量 > AstrBot 数据目录下的 plugin_data > 插件目录内 data。"""
     if explicit:
         return Path(explicit)
     try:
         from astrbot.core.utils.astrbot_path import get_astrbot_data_path
 
-        return Path(get_astrbot_data_path()) / "task"
+        return Path(get_astrbot_data_path()) / "plugin_data" / "astrbot_plugin_screen_watch"
     except Exception:
         pass
-    for guess in (r"D:\AstrBot\data\task", str(Path.cwd() / "task")):
-        if Path(guess).parent.exists():
-            return Path(guess)
-    return Path.cwd() / "task"
+    return Path(__file__).resolve().parent / "data"
 
 
 TASK_DIR = resolve_task_dir()
