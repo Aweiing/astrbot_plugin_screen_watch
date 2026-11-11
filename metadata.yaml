@@ -1,0 +1,33 @@
+name: astrbot_plugin_screen_watch
+display_name: 窗口监听
+short_desc: 盯住一个窗口，画面一变就叫你 —— 可接 AI 判断
+desc: |
+  盯住电脑上任意一个窗口，画面有变化就通知你，不用一直守着屏幕。
+
+  **它能做什么**
+  - 按窗口标题找到目标，定时截取该窗口的画面（被遮挡也能抓）
+  - 前后两帧比对，按“变化面积占比”判断是否值得上报
+  - 触发后写一条事件，交给 AstrBot 的正常对话流程处理：人设、历史、工具都在
+  - 有内置看护：进程挂了会自动重拉，配置文件里删掉的任务会被清掉
+
+  **适合的场景**
+  - 盯着聊天窗口，有人回话就叫你
+  - 盯着跑批 / 编译 / 下载页面，跑完了说一声
+  - 盯着价格、库存、抢票页面，一变就提醒
+  - 自己写程序往 `task/wait/` 里丢 json 也行，插件同样会处理
+
+  **注意**
+  - 仅支持 Windows（依赖 `PrintWindow` 抓窗口）
+  - 需要在配置里填 `target_session`，也就是推给哪个会话
+  - 默认每 3 秒扫一次队列、每 30 秒核对一次监听进程
+
+  **它不是一个独立软件**，是 AstrBot 的插件，跟着 AstrBot 一起跑。
+version: 0.1.0
+author: 明峰
+repo: https://github.com/Aweiing/astrbot_plugin_screen_watch
+astrbot_version: ">=4.0.0"
+tags:
+  - 监控
+  - 通知
+  - 效率
+  - windows

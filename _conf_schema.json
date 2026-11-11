@@ -1,0 +1,31 @@
+{
+  "target_session": {
+    "description": "推送到哪个会话",
+    "type": "string",
+    "default": "",
+    "hint": "必填。格式 平台:消息类型:会话ID，例如 aiocqhttp:FriendMessage:123456。填错不会有任何推送"
+  },
+  "threshold": {
+    "description": "变化阈值",
+    "type": "float",
+    "default": 0.02,
+    "hint": "任务里的 ratio 低于这个值就不通知，0.02 就是 2%。这一条优先于 notify"
+  },
+  "prompt_template": {
+    "description": "提示词模板",
+    "type": "text",
+    "default": "【系统通知】\n任务：{task}\n目的：{purpose}\n时间：{ts}\n变化：{ratio}\n内容：{text}",
+    "hint": "可用变量：{task} {purpose} {text} {ratio} {ratio_raw} {ts} {extra} {notify} {filename} {raw}。变量一律按字符串处理，缺的值给空字符串"
+  },
+  "poll_interval": {
+    "description": "扫描间隔（秒）",
+    "type": "int",
+    "default": 3
+  },
+  "reconcile_interval": {
+    "description": "对齐监听的间隔（秒）",
+    "type": "int",
+    "default": 30,
+    "hint": "每隔这么久读一次 watchers.json：清单里有但没在跑的就拉起来，清单外还在跑的杀掉。清单读不出来时整轮跳过"
+  }
+}
