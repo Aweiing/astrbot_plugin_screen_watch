@@ -195,11 +195,13 @@ class EventBridgePlugin(Star):
             self._log(f"watchers.json 读取失败，本轮跳过: {e}")
             return None
 
-    def _pid_alive(self, pid: int) -> bool:
-        out = subprocess.run(
-            ["tasklist", "/FI", f"PID eq {pid}", "/NH"],
-            capture_output=True, text=True, errors="ignore",
-        ).stdout
+    async def _pid_alive(self, pid: int) -> bool:
+        out = await asyncio.to_thread(
+            lambda: subprocess.run(
+                ["tasklist", "/FI", f"PID eq {pid}", "/NH"],
+                capture_output=True, text=True, errors="ignore",
+            ).stdout
+        )
         return str(pid) in out
 
     def _read_pid(self, task: str) -> int | None:
@@ -213,8 +215,10 @@ class EventBridgePlugin(Star):
         except Exception:
             return None
 
-    def _kill(self, pid: int) -> None:
-        subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True)
+    async def _kill(self, pid: int) -> None:
+        await asyncio.to_thread(
+            subprocess.run, ["taskkill", "/F", "/PID", str(pid)], capture_output=True
+        )
 
     def _spawn(self, spec: dict) -> bool:
         task = str(spec.get("task") or "").strip()
@@ -251,7 +255,7 @@ class EventBridgePlugin(Star):
 
         for task, spec in wanted.items():
             pid = self._read_pid(task)
-            if pid and self._pid_alive(pid):
+            if pid and await self._pid_alive(pid):
                 continue
             self._spawn(spec)
 
@@ -261,7 +265,7 @@ class EventBridgePlugin(Star):
                 continue
             pid = self._read_pid(task)
             if pid:
-                self._kill(pid)
+                await self._kill(pid)
                 self._log(f"清理迷路监听: {task} (pid {pid})")
             try:
                 f.unlink(missing_ok=True)
