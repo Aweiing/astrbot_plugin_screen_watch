@@ -22,7 +22,7 @@ desc: |
   · 默认每 3 秒扫一次队列，每 30 秒核对一次监听进程
 
   它不是独立软件，是 AstrBot 的插件，跟着 AstrBot 一起跑。
-version: 0.1.1
+version: 0.1.2
 author: awei
 repo: https://github.com/Aweiing/astrbot_plugin_screen_watch
 astrbot_version: ">=4.0.0"
