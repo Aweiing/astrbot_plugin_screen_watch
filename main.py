@@ -163,7 +163,7 @@ class EventBridgePlugin(Star):
                 now = asyncio.get_event_loop().time()
                 if now - last_reconcile >= self.reconcile_interval:
                     last_reconcile = now
-                    self._reconcile()
+                    await self._reconcile()
             except asyncio.CancelledError:
                 raise
             except Exception as e:
@@ -247,7 +247,7 @@ class EventBridgePlugin(Star):
             self._log(f"拉起失败 {task}: {e}")
             return False
 
-    def _reconcile(self) -> None:
+    async def _reconcile(self) -> None:
         specs = self._read_watchers()
         if specs is None:
             return
