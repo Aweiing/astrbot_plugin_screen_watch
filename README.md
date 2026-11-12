@@ -61,7 +61,7 @@
 
 ## 四、怎么加一路监听
 
-所有监听都写在 `data/task/watchers.json` 里，一个数组：
+所有监听都写在 `data/plugin_data/astrbot_plugin_screen_watch/watchers.json` 里，一个数组：
 
 ```json
 [
@@ -98,7 +98,7 @@ python watch.py --list-windows
 
 ## 五、事件长什么样
 
-watcher 写进 `data/task/wait/` 的 json：
+watcher 写进 `data/plugin_data/astrbot_plugin_screen_watch/wait/` 的 json：
 
 ```json
 {
@@ -142,4 +142,4 @@ watcher 写进 `data/task/wait/` 的 json：
 | 收不到推送 | `target_session` 有没有填对 |
 | 文件进了 done 但没消息 | 被阈值或 `notify: no` 拦下，或模型判断不值得说 |
 
-日志在 `data/task/bridge.log`。
+日志在 `data/plugin_data/astrbot_plugin_screen_watch/bridge.log`。
